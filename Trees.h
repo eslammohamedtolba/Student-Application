@@ -19,7 +19,7 @@ struct Node {
 };
 //AVL Tree is a Binary Tree
 // consists of many nodes that connected by each other
-// and the Balance factor of each Node is between to 1 and -1
+// and the Balance factor of each Node is between 1 and -1
 // so the Tree is strictly balanced
 class AVLTree {
 private:

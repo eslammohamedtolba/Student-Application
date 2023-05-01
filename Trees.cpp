@@ -14,7 +14,7 @@ Node::Node(int id,string name,string department,float gpa){
 void Node::print() {
     cout<<"[ "<<Id<<" "<<Name<<" "<<Gpa<<" "<<Department<<" "<<Height<<" ]"<<endl;
 }
-//AVL Tree
+//AVL Tree balance factor function
 int AVLTree::Bfactor(Node *myNode){
     return ((myNode->left==nullptr?-1:myNode->left->Height)-(myNode->right==nullptr?-1:myNode->right->Height));
 }
