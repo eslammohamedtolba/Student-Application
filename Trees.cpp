@@ -41,14 +41,14 @@ Node* AVLTree::right_rotation(Node *myNode){
 }
 // to balance any Node if its balance factor violated the constraint
 Node* AVLTree::balance(Node *myNode){
-    //balance the Node if its left is greater than its right by 1
+    //balance the Node if its left is greater than its right by 2
     if(Bfactor(myNode)==2){
         if(Bfactor(myNode->left)==-1){
             myNode->left=left_rotation(myNode->left);
         }
         myNode=right_rotation(myNode);
     }
-    //balance the Node if its right is greater than its left by 1
+    //balance the Node if its right is greater than its left by 2
     else if(Bfactor(myNode)==-2){
         if(Bfactor(myNode->right)==1){
             myNode->right=right_rotation(myNode->right);
