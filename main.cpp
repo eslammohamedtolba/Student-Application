@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Trees.h"
 using namespace std;
 int main() {
@@ -12,9 +11,5 @@ int main() {
         getline(cin,Students[i]->Name);
         cin>>Students[i]->Gpa>>Students[i]->Department;
     }
-    AVLTree mytree;
-    for(int i=0;i<Nstudents;i++){
-        mytree.Insert(Students[i]);
-    }
-    //interface
+    //Interface
 }

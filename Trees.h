@@ -3,41 +3,43 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-class BSTree{
-
-};
-
-//AVLTrees Node
+//Node
 struct Node {
-    int Id,Height;
+    int Id;float Gpa;
     string Name,Department;
-    float Gpa;
     Node *left,*right;
     Node();
-    Node(int id,string name,string department,float gpa);
     void print();
 };
+class BSTree{};
+
 //AVL Tree is a Binary Tree
 // consists of many nodes that connected by each other
 // and the Balance factor of each Node is between 1 and -1
 // so the Tree is strictly balanced
 class AVLTree {
 private:
-    Node* root;
+    struct NodeAVL:public Node{
+        int Height;
+        NodeAVL *left,*right;
+        NodeAVL(Node *myNode);
+    };
+    NodeAVL* root;
     int length;
-    Node* Insert(Node *myNode,Node *AddNode);
-    Node *findMax(Node *myNode);
-    Node *findMin(Node *myNode);
-    Node* Delete(Node *myNode,int id);
-    Node* Search(Node *myNode,int id);
-    void TraversalinDepth(Node *myNode);
+protected:
+    int Bfactor(NodeAVL *myNode);
+    void updateHeight(NodeAVL *myNode);
+    NodeAVL* left_rotation(NodeAVL *myNode);
+    NodeAVL* right_rotation(NodeAVL *myNode);
+    NodeAVL* balance(NodeAVL *myNode);
+    NodeAVL* Insert(NodeAVL *myNode,NodeAVL *AddNode);
+    NodeAVL *findMax(NodeAVL *myNode);
+    NodeAVL *findMin(NodeAVL *myNode);
+    NodeAVL* Delete(NodeAVL *myNode,int id);
+    NodeAVL* Search(NodeAVL *myNode,int id);
+    void TraversalinDepth(NodeAVL *myNode);
 public:
     AVLTree():root(nullptr),length(0){}
-    int Bfactor(Node *myNode);
-    void updateHeight(Node *myNode);
-    Node* left_rotation(Node *myNode);
-    Node* right_rotation(Node *myNode);
-    Node* balance(Node *myNode);
     void Insert(Node *AddNode);
     int findMax();
     int findMin();
@@ -46,11 +48,7 @@ public:
     void TraversalinDepth();
 };
 
-class MinHeapTree{
-
-};
-class MaxHeapTree{
-
-};
+class MinHeapTree{};
+class MaxHeapTree{};
 
 #endif //ASSIGNMENT3_TREES_H
