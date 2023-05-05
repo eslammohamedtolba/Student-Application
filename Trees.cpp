@@ -1,35 +1,36 @@
 #include "Trees.h"
+
+
+//---------------------------------------------------AVL Tree implementation--------------------------------------------
+
 //the Node empty constructor
-Node::Node():left(nullptr),right(nullptr){}
+AVLTree::AVLNode::AVLNode():left(nullptr),right(nullptr){}
+//the Node parameterize constructor
+AVLTree::AVLNode::AVLNode(int id,string name,float gpa,string department){
+    Id=id;
+    Name=name;
+    Gpa=gpa;
+    Department=department;
+    left=right=nullptr;
+    Height=0;
+}
 //printing the Node
-void Node::print() {
+void AVLTree::AVLNode::print() {
     cout<<"[ "<<Id<<" "<<Name<<" "<<Gpa<<" "<<Department<<" ]"<<endl;
 }
 
-
-
-//the AVLTree parameterize constructor
-AVLTree::NodeAVL::NodeAVL(Node *myNode){
-    this->Id=myNode->Id;
-    this->Name=myNode->Name;
-    this->Department=myNode->Department;
-    this->Gpa=myNode->Gpa;
-    left=right= nullptr;
-    Height=0;
-}
-
 //AVL Tree balance factor function
-int AVLTree::Bfactor(NodeAVL *myNode){
+int AVLTree::Bfactor(AVLNode *myNode){
     return ((myNode->left==nullptr?-1:myNode->left->Height)-(myNode->right==nullptr?-1:myNode->right->Height));
 }
 //to update the Node Height
-void AVLTree::updateHeight(NodeAVL *myNode){
+void AVLTree::updateHeight(AVLNode *myNode){
     myNode->Height=max((myNode->left==nullptr?-1:myNode->left->Height),(myNode->right==nullptr?-1:myNode->right->Height))+1;
 }
 
 //rotating any Node to the left direction
-AVLTree::NodeAVL* AVLTree::left_rotation(NodeAVL *myNode){
-    NodeAVL *temp=myNode->right;
+AVLTree::AVLNode* AVLTree::left_rotation(AVLNode *myNode){
+    AVLNode *temp=myNode->right;
     myNode->right=temp->left;
     temp->left=myNode;
     updateHeight(myNode);
@@ -37,8 +38,8 @@ AVLTree::NodeAVL* AVLTree::left_rotation(NodeAVL *myNode){
     return temp;
 }
 //rotating any Node to the right direction
-AVLTree::NodeAVL* AVLTree::right_rotation(NodeAVL *myNode){
-    NodeAVL *temp=myNode->left;
+AVLTree::AVLNode* AVLTree::right_rotation(AVLNode *myNode){
+    AVLNode *temp=myNode->left;
     myNode->left=temp->right;
     temp->right=myNode;
     updateHeight(myNode);
@@ -46,7 +47,7 @@ AVLTree::NodeAVL* AVLTree::right_rotation(NodeAVL *myNode){
     return temp;
 }
 // to balance any Node if its balance factor violated the constraint
-AVLTree::NodeAVL* AVLTree::balance(NodeAVL *myNode){
+AVLTree::AVLNode* AVLTree::balance(AVLNode *myNode){
     //balance the Node if its left is greater than its right by 2
     if(Bfactor(myNode)==2){
         if(Bfactor(myNode->left)==-1){
@@ -64,7 +65,7 @@ AVLTree::NodeAVL* AVLTree::balance(NodeAVL *myNode){
     return myNode;
 }
 
-AVLTree::NodeAVL* AVLTree::Insert(NodeAVL *myNode,NodeAVL *AddNode){
+AVLTree::AVLNode* AVLTree::Insert(AVLNode *myNode,AVLNode *AddNode){
     if(length==0){
         myNode=AddNode;
     }
@@ -91,13 +92,13 @@ AVLTree::NodeAVL* AVLTree::Insert(NodeAVL *myNode,NodeAVL *AddNode){
     return myNode;
 }
 //to insert a Node in AVL tree
-void AVLTree::Insert(Node *AddNode){
+void AVLTree::Insert(int id,string name,float gpa,string department){
     try{
-        NodeAVL *AddNodeAVL =new NodeAVL(AddNode);
         //to check that this Node doesn't repeat any id in the tree
-        if(Search(root,AddNode->Id)){
+        if(Search(root,id)){
             throw out_of_range("ID already exists");
         }
+        AVLNode *AddNodeAVL=new AVLNode{id,name,gpa,department};
         root=Insert(root,AddNodeAVL);
         length++;
         cout<<"The student is added."<<endl;
@@ -107,7 +108,7 @@ void AVLTree::Insert(Node *AddNode){
     }
 }
 
-AVLTree::NodeAVL* AVLTree::findMax(NodeAVL *myNode){
+AVLTree::AVLNode* AVLTree::findMax(AVLNode *myNode){
     if(myNode->right!= nullptr)return findMax(myNode->right);
     else return myNode;
 }
@@ -124,7 +125,7 @@ int AVLTree::findMax(){
     }
 }
 
-AVLTree::NodeAVL* AVLTree::findMin(NodeAVL *myNode){
+AVLTree::AVLNode* AVLTree::findMin(AVLNode *myNode){
     if(myNode->left!= nullptr)return findMin(myNode->left);
     else return myNode;
 }
@@ -141,7 +142,7 @@ int AVLTree::findMin(){
     }
 }
 
-AVLTree::NodeAVL* AVLTree::Delete(NodeAVL *myNode,int id){
+AVLTree::AVLNode* AVLTree::Delete(AVLNode *myNode,int id){
     if(myNode->right==nullptr && myNode->left==nullptr){
         myNode=nullptr;
     }
@@ -156,7 +157,7 @@ AVLTree::NodeAVL* AVLTree::Delete(NodeAVL *myNode,int id){
             myNode=myNode->right;
         }
         else{
-            Node *MyMax=findMax(myNode->left);
+            AVLNode *MyMax=findMax(myNode->left);
             myNode->Id=MyMax->Id;
             myNode->Name=MyMax->Name;
             myNode->Gpa=MyMax->Gpa;
@@ -175,7 +176,7 @@ bool AVLTree::Delete(int id){
     try{
         bool isfound=Search(id);
         if(length==0){
-            throw out_of_range("Student is not found.");
+            throw out_of_range("The Tree is empty!");
         }
         else if(isfound){
             root=Delete(root,id);
@@ -188,7 +189,7 @@ bool AVLTree::Delete(int id){
     }
 }
 
-AVLTree::NodeAVL* AVLTree::Search(NodeAVL *myNode,int id){
+AVLTree::AVLNode* AVLTree::Search(AVLNode *myNode,int id){
     if(myNode==nullptr) return nullptr;
     else if(id==myNode->Id) return myNode;
     else if(id<myNode->Id) return Search(myNode->left,id);
@@ -196,7 +197,7 @@ AVLTree::NodeAVL* AVLTree::Search(NodeAVL *myNode,int id){
 }
 //to Search about Node by id if exists
 bool AVLTree::Search(int id){
-    Node *result=Search(root,id);
+    AVLNode *result=Search(root,id);
     if(result){
         cout<<"Student is found."<<endl;
         result->print();
@@ -208,12 +209,12 @@ bool AVLTree::Search(int id){
     };
 }
 
-//to print a Node sorted by id
-void AVLTree::TraversalinDepth(NodeAVL *myNode){
+void AVLTree::TraversalinDepth(AVLNode *myNode){
     if(myNode->left)TraversalinDepth(myNode->left);
     myNode->print();
     if(myNode->right)TraversalinDepth(myNode->right);
 }
+//to print a Node sorted by id
 void AVLTree::TraversalinDepth(){
     if(length){
         TraversalinDepth(root);
