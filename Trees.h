@@ -3,44 +3,39 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-//Node
-struct Node {
-    int Id;float Gpa;
-    string Name,Department;
-    Node *left,*right;
-    Node();
-    void print();
-};
 class BSTree{};
 
-//AVL Tree is a Binary Tree
-// consists of many nodes that connected by each other
-// and the Balance factor of each Node is between 1 and -1
-// so the Tree is strictly balanced
+//AVL Tree is a self-balancing binary search tree
+//use rotations which are left and right rotation so
+//the difference in height between the left and right subtrees of any node is always between 1 and -1
+// so this remains the efficiency and then the Tree always becomes strictly balanced
 class AVLTree {
 private:
-    struct NodeAVL:public Node{
-        int Height;
-        NodeAVL *left,*right;
-        NodeAVL(Node *myNode);
+    struct AVLNode {
+        int Id,Height;float Gpa;
+        string Name,Department;
+        AVLNode *left,*right;
+        AVLNode();
+        AVLNode(int id,string name,float gpa,string department);
+        void print();
     };
-    NodeAVL* root;
+    AVLNode* root;
     int length;
 protected:
-    int Bfactor(NodeAVL *myNode);
-    void updateHeight(NodeAVL *myNode);
-    NodeAVL* left_rotation(NodeAVL *myNode);
-    NodeAVL* right_rotation(NodeAVL *myNode);
-    NodeAVL* balance(NodeAVL *myNode);
-    NodeAVL* Insert(NodeAVL *myNode,NodeAVL *AddNode);
-    NodeAVL *findMax(NodeAVL *myNode);
-    NodeAVL *findMin(NodeAVL *myNode);
-    NodeAVL* Delete(NodeAVL *myNode,int id);
-    NodeAVL* Search(NodeAVL *myNode,int id);
-    void TraversalinDepth(NodeAVL *myNode);
+    int Bfactor(AVLNode *myNode);
+    void updateHeight(AVLNode *myNode);
+    AVLNode* left_rotation(AVLNode *myNode);
+    AVLNode* right_rotation(AVLNode *myNode);
+    AVLNode* balance(AVLNode *myNode);
+    AVLNode* Insert(AVLNode *myNode,AVLNode *AddNode);
+    AVLNode *findMax(AVLNode *myNode);
+    AVLNode *findMin(AVLNode *myNode);
+    AVLNode* Delete(AVLNode *myNode,int id);
+    AVLNode* Search(AVLNode *myNode,int id);
+    void TraversalinDepth(AVLNode *myNode);
 public:
     AVLTree():root(nullptr),length(0){}
-    void Insert(Node *AddNode);
+    void Insert(int id,string name,float gpa,string department);
     int findMax();
     int findMin();
     bool Delete(int id);
