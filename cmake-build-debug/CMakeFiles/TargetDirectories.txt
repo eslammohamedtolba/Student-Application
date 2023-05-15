@@ -1,3 +1,0 @@
-C:/Users/hp/Downloads/materials/DataStructure/assignments/assignment3/Student-Application/cmake-build-debug/CMakeFiles/assignment3.dir
-C:/Users/hp/Downloads/materials/DataStructure/assignments/assignment3/Student-Application/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/hp/Downloads/materials/DataStructure/assignments/assignment3/Student-Application/cmake-build-debug/CMakeFiles/rebuild_cache.dir

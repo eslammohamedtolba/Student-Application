@@ -1,6 +1,8 @@
 #ifndef FAST_PROJECT_FOR_ASSIGNMENT_AVLTREE_H
 #define FAST_PROJECT_FOR_ASSIGNMENT_AVLTREE_H
-#include "bits/stdc++.h"
+#include <string>
+#include <iostream>
+#include <stdexcept>
 using namespace std;
 
 //AVL Tree is a self-balancing binary search tree
@@ -10,11 +12,11 @@ using namespace std;
 class AVLTree {
 private:
     struct AVLNode {
-        int Id,Height;float Gpa;
-        string Name,Department;
-        AVLNode *left,*right;
+        int Id, Height; double Gpa;
+        string Name, Department;
+        AVLNode *left, *right;
         AVLNode();
-        AVLNode(int id,string name,float gpa,string department);
+        AVLNode(int id, string name, float gpa, string department);
         void print();
     };
     AVLNode* root;
@@ -25,15 +27,15 @@ protected:
     AVLNode* left_rotation(AVLNode *myNode);
     AVLNode* right_rotation(AVLNode *myNode);
     AVLNode* balance(AVLNode *myNode);
-    AVLNode* Insert(AVLNode *myNode,AVLNode *AddNode);
+    AVLNode* Insert(AVLNode *myNode, AVLNode *AddNode);
     AVLNode *findMax(AVLNode *myNode);
     AVLNode *findMin(AVLNode *myNode);
-    AVLNode* Delete(AVLNode *myNode,int id);
-    AVLNode* Search(AVLNode *myNode,int id);
+    AVLNode* Delete(AVLNode *myNode, int id);
+    AVLNode* Search(AVLNode *myNode, int id);
     void TraversalinDepth(AVLNode *myNode);
 public:
-    AVLTree():root(nullptr),length(0){}
-    void Insert(int id,string name,float gpa,string department);
+    AVLTree() :root(nullptr), length(0) {}
+    void Insert(int id, string name, double gpa, string department);
     int findMax();
     int findMin();
     bool Delete(int id);

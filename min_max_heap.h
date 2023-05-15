@@ -1,3 +1,6 @@
+#ifndef MIN_MAX_HEAP_H
+#define MIN_MAX_HEAP_H
+
 #include <iostream>
 #include <utility>
 #include <vector>
@@ -13,7 +16,14 @@ private:
 public:
     Heap() {}
 
-    int size(){
+    Heap(const Heap<T>& other)
+        : v{ other.v }
+        , cmp{ other.cmp }
+    {
+
+    }
+
+    int size() {
         return v.size();
     }
 
@@ -46,7 +56,7 @@ public:
         heapify(0);
     }
 
-    T top(){
+    T top() {
         if (!v.size())
             throw std::runtime_error("No top for Empty Heap!\n");
         return v[0];
@@ -67,62 +77,6 @@ public:
     }
 };
 
-struct Student{
-    int id;
-    double gpa;
-    std::string fname, lname, dp;
-
-    Student(int id, string f, string l, string dp, double gpa) :
-    id(id), fname(std::move(f)), lname(std::move(l)), dp(std::move(dp)), gpa(gpa){
-
-    }
-
-    void print(){
-        std::cout << "[" << id << ", " << fname << " "
-        << lname << ", " << gpa << ", " << dp << "]" << std::endl;
-    }
-};
-
-struct StudentGpaLess{
-  bool operator()(Student& a, Student& b){
-      return a.gpa < b.gpa;
-  }
-};
-
-struct StudentGpaGreater{
-    bool operator()(Student& a, Student& b){
-        return a.gpa > b.gpa;
-    }
-};
 
 
-int main() {
-    freopen("input.txt", "r", stdin);
-
-    int n;
-    std::cin >> n;
-    Heap<Student, StudentGpaLess> minHeap;
-    Heap<Student, StudentGpaGreater> maxHeap;
-
-    for (int i = 0; i < n; ++i) {
-        int id;
-        double gpa;
-        string fname, lname, dp;
-        std::cin >> id >> fname >> lname >> gpa >> dp;
-        Student newStudent(id, fname, lname, dp, gpa);
-        maxHeap.insert(newStudent);
-        minHeap.insert(newStudent);
-    }
-
-    std::cout << "Max Heap: " << std::endl;
-    while(maxHeap.size()){
-        maxHeap.top().print();
-        maxHeap.pop();
-    }
-
-    std::cout << "\nMin Heap: " << std::endl;
-    while(minHeap.size()){
-        minHeap.top().print();
-        minHeap.pop();
-    }
-}
+#endif // MIN_MAX_HEAP_H

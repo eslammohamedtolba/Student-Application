@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-template <typename Object>
+template <typename Object, typename Comparator = std::less<Object>>
 class BST {
 private:
     class Node {
@@ -13,21 +13,21 @@ private:
             , left{ left }
             , right{ right }
         {
-            
+
         }
 
         Object element;
         Node* left;
         Node* right;
     };
-    
+
 public:
     BST() : root{ nullptr } {
         // empty body
     }
 
     ~BST() {
-        
+
     }
 
     void insert(const Object& element) {
@@ -49,14 +49,15 @@ public:
 
 private:
     Node* root;
+    Comparator isLessThan;
 
     // internal functions
     Node* insert(const Object& element, Node* & r) {
         if (r == nullptr)
             r = new Node(element, nullptr, nullptr);
-        else if (element < r->element)
+        else if (isLessThan(element, r->element))
             r->left = insert(element, r->left);
-        else if (r->element < element)
+        else if (isLessThan(r->element, element))
             r->right = insert(element, r->right);
         else // already exists
             ;
@@ -76,9 +77,9 @@ private:
     const Object* find(const Object& element, Node* r) {
         if (r == nullptr)
             return nullptr;
-        else if (element < r->element)
+        else if (isLessThan(element, r->element))
             return find(element, r->left);
-        else if (r->element < element)
+        else if (isLessThan(r->element, element))
             return find(element, r->right);
         else
             return &(r->element);
@@ -87,9 +88,9 @@ private:
     void remove(const Object& element, Node* & r) {
         if (r == nullptr)
             return;
-        else if (element < r->element)
+        else if (isLessThan(element, r->element))
             remove(element, r->left);
-        else if (r->element < element)
+        else if (isLessThan(r->element, element))
             remove(element, r->right);
         else { // found
 
@@ -114,7 +115,7 @@ private:
                 delete old;
             }
         }
-            
+
     }
 
     Node* findMin(Node* r) {
